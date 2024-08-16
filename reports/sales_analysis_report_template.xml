@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sales_analysis">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Sales Analysis Report</h2>
+                        <p>Date: <span t-field="o.date"/></p>
+                        <p>Sales Prediction: <span t-field="o.sales_prediction"/></p>
+                        
+                        <h3>Top Products</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity Sold</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.top_products_ids" t-as="product">
+                                    <tr>
+                                        <td><span t-field="product.product_id.name"/></td>
+                                        <td><span t-field="product.quantity"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        
+                        <h3>Top Customers</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.top_customers_ids" t-as="customer">
+                                    <tr>
+                                        <td><span t-field="customer.partner_id.name"/></td>
+                                        <td><span t-field="customer.total_amount"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_sales_analysis" model="ir.actions.report">
+        <field name="name">Sales Analysis Report</field>
+        <field name="model">sales.analysis.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sales_analysis_report.report_sales_analysis</field>
+        <field name="report_file">sales_analysis_report.report_sales_analysis</field>
+        <field name="binding_model_id" ref="model_sales_analysis_report"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
