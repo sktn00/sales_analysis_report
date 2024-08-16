@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_analysis_report,access_sales_analysis_report,model_sales_analysis_report,base.group_user,1,1,1,1
+access_sales_analysis_top_product,access_sales_analysis_top_product,model_sales_analysis_top_product,base.group_user,1,1,1,1
+access_sales_analysis_top_customer,access_sales_analysis_top_customer,model_sales_analysis_top_customer,base.group_user,1,1,1,1
