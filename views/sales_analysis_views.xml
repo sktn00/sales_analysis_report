@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_sales_analysis_report_form" model="ir.ui.view">
+        <field name="name">sales.analysis.report.form</field>
+        <field name="model">sales.analysis.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_report_data" type="object" string="Generate Report Data"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_top_products_graph" type="object" class="oe_stat_button" icon="fa-bar-chart">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Top Products</span>
+                            </div>
+                        </button>
+                        <button name="action_view_top_customers_graph" type="object" class="oe_stat_button" icon="fa-bar-chart">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Top Customers</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="sales_prediction"/>
+                    </group>
+                    <notebook>
+                        <page string="Top Products">
+                            <field name="top_products_ids">
+                                <tree>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Top Customers">
+                            <field name="top_customers_ids">
+                                <tree>
+                                    <field name="partner_id"/>
+                                    <field name="total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_sales_analysis_report_tree" model="ir.ui.view">
+        <field name="name">sales.analysis.report.tree</field>
+        <field name="model">sales.analysis.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="sales_prediction"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Top Products Graph View -->
+    <record id="view_sales_analysis_top_product_graph" model="ir.ui.view">
+        <field name="name">sales.analysis.top.product.graph</field>
+        <field name="model">sales.analysis.top.product</field>
+        <field name="arch" type="xml">
+            <graph string="Top Products" type="bar">
+                <field name="product_id"/>
+                <field name="quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Top Customers Graph View -->
+    <record id="view_sales_analysis_top_customer_graph" model="ir.ui.view">
+        <field name="name">sales.analysis.top.customer.graph</field>
+        <field name="model">sales.analysis.top.customer</field>
+        <field name="arch" type="xml">
+            <graph string="Top Customers" type="bar">
+                <field name="partner_id"/>
+                <field name="total_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sales_analysis_report" model="ir.actions.act_window">
+        <field name="name">Sales Analysis Reports</field>
+        <field name="res_model">sales.analysis.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_sales_analysis_graph" model="ir.ui.view">
+        <field name="name">sales.analysis.graph.view</field>
+        <field name="model">sales.analysis.report</field>
+        <field name="arch" type="xml">
+            <graph string="Sales Analysis">
+                <field name="name"/>
+                <field name="total_amount"/>
+                <!-- Add Export Button -->
+                <button name="action_export_graph_pdf"
+                        type="object"
+                        class="btn-primary"
+                        string="Export as PDF"
+                        icon="fa-download"/>
+            </graph>
+        </field>
+    </record>
+    
+
+    <!-- Menu Item -->
+    <menuitem id="menu_sales_analysis_report"
+              name="Sales Analysis Reports"
+              action="action_sales_analysis_report"
+              parent="sale.sale_menu_root"
+              sequence="20"/>
+</odoo>
